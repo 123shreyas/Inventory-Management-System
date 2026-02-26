@@ -3,6 +3,7 @@ using System.Linq;
 using InventoryManagementSystem.Data;
 using InventoryManagementSystem.Models;
 using InventoryManagementSystem.Services;
+using InventoryManagementSystem.ConsoleUI;
 using Microsoft.EntityFrameworkCore;
 using Pomelo.EntityFrameworkCore.MySql.Infrastructure;
 
@@ -46,8 +47,9 @@ class Program
             switch (input)
             {
                 case "1":
-                    ProductMenu(productService);
-                    break;
+    var productConsole = new ProductConsole(productService);
+    productConsole.ShowMenu();
+    break;
                 case "2":
                     CategoryMenu(categoryService);
                     break;
@@ -75,97 +77,103 @@ class Program
         }
     }
 
-    #region Product Menu
-    static void ProductMenu(ProductService productService)
-    {
-        while (true)
-        {
-            Console.WriteLine("\n--- PRODUCTS ---");
-            Console.WriteLine("1. Add Product");
-            Console.WriteLine("2. View All Products");
-            Console.WriteLine("3. View Product By ID");
-            Console.WriteLine("4. Update Product");
-            Console.WriteLine("5. Deactivate Product");
-            Console.WriteLine("6. Back to Main Menu");
-            Console.Write("Select an option: ");
-            var input = Console.ReadLine();
+    // #region Product Menu
+    // static void ProductMenu(ProductService productService)
+    // {
+    //     while (true)
+    //     {
+    //         Console.WriteLine("\n--- PRODUCTS ---");
+    //         Console.WriteLine("1. Add Product");
+    //         Console.WriteLine("2. View All Products");
+    //         Console.WriteLine("3. View Product By ID");
+    //         Console.WriteLine("4. Update Product");
+    //         Console.WriteLine("5. Deactivate Product");
+    //         Console.WriteLine("6. Back to Main Menu");
+    //         Console.Write("Select an option: ");
+    //         var input = Console.ReadLine();
 
-            switch (input)
-            {
-                case "1":
-                    Console.Write("Enter Name: ");
-                    string name = Console.ReadLine()!;
-                    Console.Write("Enter SKU: ");
-                    string sku = Console.ReadLine()!;
-                    Console.Write("Enter Category ID: ");
-                    int catId = int.Parse(Console.ReadLine()!);
-                    Console.Write("Enter Cost: ");
-                    decimal cost = decimal.Parse(Console.ReadLine()!);
-                    Console.Write("Enter List Price: ");
-                    decimal price = decimal.Parse(Console.ReadLine()!);
-                    Console.Write("Enter Reorder Level: ");
-                    int reorder = int.Parse(Console.ReadLine()!);
+    //         switch (input)
+    //         {
+    //             case "1":
+    //                 Console.Write("Enter Name: ");
+    //                 string name = Console.ReadLine()!;
+    //                 Console.Write("Enter SKU: ");
+    //                 string sku = Console.ReadLine()!;
+    //                 Console.Write("Enter Product Description: ");
+    //                 string description = Console.ReadLine()!;
+    //                 Console.Write("Enter Category ID: ");
+    //                 int catId = int.Parse(Console.ReadLine()!);
+    //                 Console.Write("Enter Unit of Measure: ");
+    //                 string uom = Console.ReadLine()!;
+    //                 Console.Write("Enter Cost: ");
+    //                 decimal cost = decimal.Parse(Console.ReadLine()!);
+    //                 Console.Write("Enter List Price: ");
+    //                 decimal price = decimal.Parse(Console.ReadLine()!);
+    //                 Console.Write("Enter Reorder Level: ");
+    //                 int reorder = int.Parse(Console.ReadLine()!);
 
-                    productService.AddProduct(new Product
-                    {
-                        ProductName = name,
-                        SKU = sku,
-                        CategoryId = catId,
-                        Cost = cost,
-                        ListPrice = price,
-                        ReorderLevel = reorder,
-                        IsActive = true
-                    });
-                    break;
+    //                 productService.AddProduct(new Product
+    //                 {
+    //                     ProductName = name,
+    //                     SKU = sku,
+    //                     Description = description,
+    //                     CategoryId = catId,
+    //                     UnitOfMeasure = uom,
+    //                     Cost = cost,
+    //                     ListPrice = price,
+    //                     ReorderLevel = reorder,
+    //                     IsActive = true
+    //                 });
+    //                 break;
 
-                case "2":
-                    var products = productService.GetAllProducts();
-                    Console.WriteLine("{0,-5} {1,-20} {2,-10} {3,-6} {4,-6}", "ID", "Name", "SKU", "Price", "Active");
-                    foreach (var p in products)
-                        Console.WriteLine("{0,-5} {1,-20} {2,-10} {3,-6} {4,-6}", p.ProductId, p.ProductName, p.SKU, p.ListPrice, p.IsActive);
-                    break;
+    //             case "2":
+    //                 var products = productService.GetAllProducts();
+    //                 Console.WriteLine("{0,-5} {1,-20} {2,-10} {3,-6} {4,-6}", "ID", "Name", "SKU", "Price", "Active");
+    //                 foreach (var p in products)
+    //                     Console.WriteLine("{0,-5} {1,-20} {2,-10} {3,-6} {4,-6}", p.ProductId, p.ProductName, p.Description, p.SKU, p.ListPrice, p.IsActive);
+    //                 break;
 
-                case "3":
-                    Console.Write("Enter Product ID: ");
-                    int pid = int.Parse(Console.ReadLine()!);
-                    var product = productService.GetProduct(pid);
-                    if (product != null)
-                        Console.WriteLine($"ID: {product.ProductId}, Name: {product.ProductName}, SKU: {product.SKU}, Price: {product.ListPrice}");
-                    else
-                        Console.WriteLine("Product not found.");
-                    break;
+    //             case "3":
+    //                 Console.Write("Enter Product ID: ");
+    //                 int pid = int.Parse(Console.ReadLine()!);
+    //                 var product = productService.GetProduct(pid);
+    //                 if (product != null)
+    //                     Console.WriteLine($"ID: {product.ProductId}, Name: {product.ProductName}, SKU: {product.SKU}, Price: {product.ListPrice}");
+    //                 else
+    //                     Console.WriteLine("Product not found.");
+    //                 break;
 
-                case "4":
-                    Console.Write("Enter Product ID to update: ");
-                    int upId = int.Parse(Console.ReadLine()!);
-                    var toUpdate = productService.GetProduct(upId);
-                    if (toUpdate != null)
-                    {
-                        Console.Write("Enter new Name: ");
-                        toUpdate.ProductName = Console.ReadLine()!;
-                        Console.Write("Enter new Price: ");
-                        toUpdate.ListPrice = decimal.Parse(Console.ReadLine()!);
-                        productService.UpdateProduct(toUpdate);
-                    }
-                    else
-                        Console.WriteLine("Product not found.");
-                    break;
+    //             case "4":
+    //                 Console.Write("Enter Product ID to update: ");
+    //                 int upId = int.Parse(Console.ReadLine()!);
+    //                 var toUpdate = productService.GetProduct(upId);
+    //                 if (toUpdate != null)
+    //                 {
+    //                     Console.Write("Enter new Name: ");
+    //                     toUpdate.ProductName = Console.ReadLine()!;
+    //                     Console.Write("Enter new Price: ");
+    //                     toUpdate.ListPrice = decimal.Parse(Console.ReadLine()!);
+    //                     productService.UpdateProduct(toUpdate);
+    //                 }
+    //                 else
+    //                     Console.WriteLine("Product not found.");
+    //                 break;
 
-                case "5":
-                    Console.Write("Enter Product ID to deactivate: ");
-                    int delId = int.Parse(Console.ReadLine()!);
-                    productService.DeleteProduct(delId);
-                    break;
+    //             case "5":
+    //                 Console.Write("Enter Product ID to deactivate: ");
+    //                 int delId = int.Parse(Console.ReadLine()!);
+    //                 productService.DeleteProduct(delId);
+    //                 break;
 
-                case "6":
-                    return;
-                default:
-                    Console.WriteLine("Invalid option.");
-                    break;
-            }
-        }
-    }
-    #endregion
+    //             case "6":
+    //                 return;
+    //             default:
+    //                 Console.WriteLine("Invalid option.");
+    //                 break;
+    //         }
+    //     }
+    // }
+    // #endregion
 
     #region Category Menu
     static void CategoryMenu(CategoryService categoryService)

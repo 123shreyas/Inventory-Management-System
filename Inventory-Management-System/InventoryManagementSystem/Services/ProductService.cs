@@ -42,30 +42,32 @@ namespace InventoryManagementSystem.Services
 
         // READ BY ID
         public Product? GetProduct(int id)
-        {
-            return _context.Products.Find(id);
-        }
+{
+    return _context.Products
+        .Include(p => p.Category)
+        .FirstOrDefault(p => p.ProductId == id);
+}
 
         // UPDATE
-       public void UpdateProduct(Product product)
+      public bool UpdateProduct(Product product)
 {
     var existing = _context.Products.Find(product.ProductId);
 
     if (existing == null)
-    {
-        Console.WriteLine("Product not found.");
-        return;
-    }
+        return false;
 
+   existing.SKU = product.SKU;
     existing.ProductName = product.ProductName;
     existing.Description = product.Description;
-    existing.ListPrice = product.ListPrice;
-    existing.Cost = product.Cost;
-    existing.UnitOfMeasure = product.UnitOfMeasure;
     existing.CategoryId = product.CategoryId;
+    existing.UnitOfMeasure = product.UnitOfMeasure;
+    existing.Cost = product.Cost;
+    existing.ListPrice = product.ListPrice;
+    existing.ReorderLevel = product.ReorderLevel;
+    existing.IsActive = product.IsActive;
 
     _context.SaveChanges();
-    Console.WriteLine("Product Updated Successfully!");
+    return true;
 }
 
 

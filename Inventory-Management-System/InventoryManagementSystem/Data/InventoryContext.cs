@@ -30,73 +30,73 @@ namespace InventoryManagementSystem.Data
         //     }
         // }
 
-       protected override void OnModelCreating(ModelBuilder modelBuilder)
-{
-modelBuilder.Entity<ProductCategory>()
-    .HasKey(pc => pc.ProductCategoryId);
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<ProductCategory>()
+                .HasKey(pc => pc.ProductCategoryId);
 
-    modelBuilder.Entity<StockTransaction>()
-    .HasKey(st => st.TransactionId);
+            modelBuilder.Entity<StockTransaction>()
+            .HasKey(st => st.TransactionId);
 
 
 
-    // Product -> Category
-    modelBuilder.Entity<Product>()
-        .HasOne(p => p.Category)
-        .WithMany(c => c.Products)
-        .HasForeignKey(p => p.CategoryId)
-        .OnDelete(DeleteBehavior.Restrict);
+            // Product -> Category
+            modelBuilder.Entity<Product>()
+                .HasOne(p => p.Category)
+                .WithMany(c => c.Products)
+                .HasForeignKey(p => p.CategoryId)
+                .OnDelete(DeleteBehavior.Restrict);
 
-    // ProductSupplier
-    modelBuilder.Entity<ProductSupplier>()
-        .HasOne(ps => ps.Product)
-        .WithMany(p => p.ProductSuppliers)
-        .HasForeignKey(ps => ps.ProductId);
+            // ProductSupplier
+            modelBuilder.Entity<ProductSupplier>()
+                .HasOne(ps => ps.Product)
+                .WithMany(p => p.ProductSuppliers)
+                .HasForeignKey(ps => ps.ProductId);
 
-    modelBuilder.Entity<ProductSupplier>()
-        .HasOne(ps => ps.Supplier)
-        .WithMany(s => s.ProductSuppliers)
-        .HasForeignKey(ps => ps.SupplierId);
+            modelBuilder.Entity<ProductSupplier>()
+                .HasOne(ps => ps.Supplier)
+                .WithMany(s => s.ProductSuppliers)
+                .HasForeignKey(ps => ps.SupplierId);
 
-    // StockLevel
-    modelBuilder.Entity<StockLevel>()
-        .HasOne(sl => sl.Product)
-        .WithMany(p => p.StockLevels)
-        .HasForeignKey(sl => sl.ProductId);
+            // StockLevel
+            modelBuilder.Entity<StockLevel>()
+                .HasOne(sl => sl.Product)
+                .WithMany(p => p.StockLevels)
+                .HasForeignKey(sl => sl.ProductId);
 
-    modelBuilder.Entity<StockLevel>()
-        .HasOne(sl => sl.Warehouse)
-        .WithMany(w => w.StockLevels)
-        .HasForeignKey(sl => sl.WarehouseId);
+            modelBuilder.Entity<StockLevel>()
+                .HasOne(sl => sl.Warehouse)
+                .WithMany(w => w.StockLevels)
+                .HasForeignKey(sl => sl.WarehouseId);
 
-    // StockTransaction
-    modelBuilder.Entity<StockTransaction>()
-        .HasOne(st => st.Product)
-        .WithMany(p => p.StockTransactions)
-        .HasForeignKey(st => st.ProductId);
+            // StockTransaction
+            modelBuilder.Entity<StockTransaction>()
+                .HasOne(st => st.Product)
+                .WithMany(p => p.StockTransactions)
+                .HasForeignKey(st => st.ProductId);
 
-    modelBuilder.Entity<StockTransaction>()
-        .HasOne(st => st.Warehouse)
-        .WithMany(w => w.StockTransactions)
-        .HasForeignKey(st => st.WarehouseId);
+            modelBuilder.Entity<StockTransaction>()
+                .HasOne(st => st.Warehouse)
+                .WithMany(w => w.StockTransactions)
+                .HasForeignKey(st => st.WarehouseId);
 
-    // Self reference (Category hierarchy)
-    modelBuilder.Entity<ProductCategory>()
-        .HasOne(pc => pc.ParentCategory)
-        .WithMany(pc => pc.SubCategories)
-        .HasForeignKey(pc => pc.ParentCategoryId)
-        .OnDelete(DeleteBehavior.SetNull);
+            // Self reference (Category hierarchy)
+            modelBuilder.Entity<ProductCategory>()
+                .HasOne(pc => pc.ParentCategory)
+                .WithMany(pc => pc.SubCategories)
+                .HasForeignKey(pc => pc.ParentCategoryId)
+                .OnDelete(DeleteBehavior.SetNull);
 
-    // Unique SKU
-    modelBuilder.Entity<Product>()
-        .HasIndex(p => p.SKU)
-        .IsUnique();
+            // Unique SKU
+            modelBuilder.Entity<Product>()
+                .HasIndex(p => p.SKU)
+                .IsUnique();
 
-    // Enum stored as string
-    modelBuilder.Entity<StockTransaction>()
-        .Property(s => s.TransactionType)
-        .HasConversion<string>();
-}
+            // Enum stored as string
+            modelBuilder.Entity<StockTransaction>()
+                .Property(s => s.TransactionType)
+                .HasConversion<string>();
+        }
 
 
     }
