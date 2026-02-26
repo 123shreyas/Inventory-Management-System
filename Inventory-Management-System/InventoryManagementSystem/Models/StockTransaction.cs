@@ -6,7 +6,7 @@ namespace InventoryManagementSystem.Models
     OUT,
     TRANSFER_IN,
     TRANSFER_OUT,
-    ADJUSTMENT
+    ADJUST
 }
 
     public class StockTransaction

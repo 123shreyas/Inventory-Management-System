@@ -21,14 +21,14 @@ namespace InventoryManagementSystem.Services
 
     if (existingProduct != null)
     {
-        Console.WriteLine("❌ Product with this SKU already exists!");
+        Console.WriteLine("Product with this SKU already exists!");
         return;
     }
 
     _context.Products.Add(product);
     _context.SaveChanges();
 
-    Console.WriteLine("✅ Product Added Successfully!");
+    Console.WriteLine("Product Added Successfully!");
 }
 
 
@@ -63,7 +63,6 @@ namespace InventoryManagementSystem.Services
     existing.UnitOfMeasure = product.UnitOfMeasure;
     existing.Cost = product.Cost;
     existing.ListPrice = product.ListPrice;
-    existing.ReorderLevel = product.ReorderLevel;
     existing.IsActive = product.IsActive;
 
     _context.SaveChanges();

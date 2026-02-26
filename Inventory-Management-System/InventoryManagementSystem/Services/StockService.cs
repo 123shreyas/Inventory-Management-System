@@ -172,7 +172,7 @@ namespace InventoryManagementSystem.Services
                 ProductId = productId,
                 WarehouseId = warehouseId,
                 Quantity = difference,
-                TransactionType = TransactionType.ADJUSTMENT,
+                TransactionType = TransactionType.ADJUST,
                 TransactionDate = DateTime.Now,
                 Reference = reference
             });
@@ -198,16 +198,12 @@ namespace InventoryManagementSystem.Services
         }
 
 
-        public decimal GetTotalInventoryValue()
-        {
-            return _context.StockLevels
-                .Join(_context.Products,
-                      sl => sl.ProductId,
-                      p => p.ProductId,
-                      (sl, p) => sl.QuantityOnHand * p.Cost)
-                .DefaultIfEmpty(0)
-                .Sum();
-        }
+       public decimal GetTotalInventoryValue()
+{
+    return _context.StockLevels
+        .Select(sl => sl.QuantityOnHand * sl.Product.Cost)
+        .Sum();
+}
 
     }
 }

@@ -17,13 +17,14 @@ namespace InventoryManagementSystem.ConsoleUI
         {
             while (true)
             {
+        
                 Console.WriteLine("\n--- PRODUCTS ---");
                 Console.WriteLine("1. Add Product");
                 Console.WriteLine("2. View All Products");
                 Console.WriteLine("3. View Product By ID");
                 Console.WriteLine("4. Update Product");
                 Console.WriteLine("5. Deactivate Product");
-                Console.WriteLine("6. Back");
+                Console.WriteLine("0. Back");
                 Console.Write("Select: ");
 
                 var input = Console.ReadLine();
@@ -35,7 +36,7 @@ namespace InventoryManagementSystem.ConsoleUI
                     case "3": ViewById(); break;
                     case "4": Update(); break;
                     case "5": Deactivate(); break;
-                    case "6": return;
+                    case "0": return;
                     default: Console.WriteLine("Invalid option."); break;
                 }
             }
@@ -92,7 +93,7 @@ namespace InventoryManagementSystem.ConsoleUI
 
             foreach (var p in products)
             {
-                Console.WriteLine("{0,-5} {1,-20} {2,-12} {3,-10} {4,-10}",
+                Console.WriteLine("{0,-5} {1,-20} {2,-12} {3,-10:F2} {4,-10:F2}",
                     p.ProductId,
                     p.ProductName,
                     p.SKU,
@@ -123,8 +124,8 @@ namespace InventoryManagementSystem.ConsoleUI
     Console.WriteLine($"Description: {product.Description}");
     Console.WriteLine($"Category: {product.Category?.CategoryName ?? "N/A"}");
     Console.WriteLine($"Unit Of Measure: {product.UnitOfMeasure}");
-    Console.WriteLine($"Cost: {product.Cost}");
-    Console.WriteLine($"List Price: {product.ListPrice}");
+    Console.WriteLine($"Cost: {product.Cost:F2}");
+    Console.WriteLine($"List Price: {product.ListPrice:F2}");
     Console.WriteLine($"Active: {product.IsActive}");
     Console.WriteLine("====================================");
 }
@@ -164,10 +165,6 @@ namespace InventoryManagementSystem.ConsoleUI
     if (decimal.TryParse(Console.ReadLine(), out decimal price))
         product.ListPrice = price;
 
-    Console.Write($"Enter New Reorder Level ({product.ReorderLevel}): ");
-    if (int.TryParse(Console.ReadLine(), out int reorder))
-        product.ReorderLevel = reorder;
-
     Console.Write($"Enter New Category ID ({product.CategoryId}): ");
     if (int.TryParse(Console.ReadLine(), out int category))
         product.CategoryId = category;
@@ -200,6 +197,12 @@ if (!string.IsNullOrWhiteSpace(input))
                 Console.Write("Invalid input. Enter valid ID: ");
 
             _productService.DeleteProduct(id);
+        }
+
+         private void Pause()
+        {
+            Console.WriteLine("\nPress any key to return to menu...");
+            Console.ReadKey();
         }
     }
 }
