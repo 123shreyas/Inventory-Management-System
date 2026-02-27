@@ -20,7 +20,7 @@ namespace InventoryManagementSystem.ConsoleUI
         {
             while (true)
             {
-                
+
                 Console.WriteLine("\n--- STOCK MANAGEMENT ---");
                 Console.WriteLine("1. Stock In");
                 Console.WriteLine("2. Stock Out");

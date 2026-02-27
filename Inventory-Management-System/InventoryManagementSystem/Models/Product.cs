@@ -8,7 +8,7 @@ namespace InventoryManagementSystem.Models
         public string? Description { get; set; }
 
         public int CategoryId { get; set; }
-public ProductCategory? Category { get; set; }
+        public ProductCategory? Category { get; set; }
 
 
         public string? UnitOfMeasure { get; set; }

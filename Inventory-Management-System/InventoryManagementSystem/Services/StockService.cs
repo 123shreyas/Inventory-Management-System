@@ -198,12 +198,12 @@ namespace InventoryManagementSystem.Services
         }
 
 
-       public decimal GetTotalInventoryValue()
-{
-    return _context.StockLevels
-        .Select(sl => sl.QuantityOnHand * sl.Product.Cost)
-        .Sum();
-}
+        public decimal GetTotalInventoryValue()
+        {
+            return _context.StockLevels
+                .Select(sl => sl.QuantityOnHand * sl.Product.Cost)
+                .Sum();
+        }
 
     }
 }

@@ -17,7 +17,7 @@ namespace InventoryManagementSystem.ConsoleUI
         {
             while (true)
             {
-        
+
                 Console.WriteLine("\n--- PRODUCTS ---");
                 Console.WriteLine("1. Add Product");
                 Console.WriteLine("2. View All Products");
@@ -103,91 +103,91 @@ namespace InventoryManagementSystem.ConsoleUI
         }
 
         private void ViewById()
-{
-    int id;
-    Console.Write("Enter Product ID: ");
-    while (!int.TryParse(Console.ReadLine(), out id))
-        Console.Write("Invalid input. Enter valid ID: ");
+        {
+            int id;
+            Console.Write("Enter Product ID: ");
+            while (!int.TryParse(Console.ReadLine(), out id))
+                Console.Write("Invalid input. Enter valid ID: ");
 
-    var product = _productService.GetProduct(id);
+            var product = _productService.GetProduct(id);
 
-    if (product == null)
-    {
-        Console.WriteLine("Product not found.");
-        return;
-    }
+            if (product == null)
+            {
+                Console.WriteLine("Product not found.");
+                return;
+            }
 
-    Console.WriteLine("\n========= PRODUCT DETAILS =========");
-    Console.WriteLine($"ID: {product.ProductId}");
-    Console.WriteLine($"Name: {product.ProductName}");
-    Console.WriteLine($"SKU: {product.SKU}");
-    Console.WriteLine($"Description: {product.Description}");
-    Console.WriteLine($"Category: {product.Category?.CategoryName ?? "N/A"}");
-    Console.WriteLine($"Unit Of Measure: {product.UnitOfMeasure}");
-    Console.WriteLine($"Cost: {product.Cost:F2}");
-    Console.WriteLine($"List Price: {product.ListPrice:F2}");
-    Console.WriteLine($"Active: {product.IsActive}");
-    Console.WriteLine("====================================");
-}
+            Console.WriteLine("\n========= PRODUCT DETAILS =========");
+            Console.WriteLine($"ID: {product.ProductId}");
+            Console.WriteLine($"Name: {product.ProductName}");
+            Console.WriteLine($"SKU: {product.SKU}");
+            Console.WriteLine($"Description: {product.Description}");
+            Console.WriteLine($"Category: {product.Category?.CategoryName ?? "N/A"}");
+            Console.WriteLine($"Unit Of Measure: {product.UnitOfMeasure}");
+            Console.WriteLine($"Cost: {product.Cost:F2}");
+            Console.WriteLine($"List Price: {product.ListPrice:F2}");
+            Console.WriteLine($"Active: {product.IsActive}");
+            Console.WriteLine("====================================");
+        }
 
         private void Update()
-{
-    Console.Write("Enter Product ID to update: ");
-    if (!int.TryParse(Console.ReadLine(), out int id))
-    {
-        Console.WriteLine("Invalid ID.");
-        return;
-    }
+        {
+            Console.Write("Enter Product ID to update: ");
+            if (!int.TryParse(Console.ReadLine(), out int id))
+            {
+                Console.WriteLine("Invalid ID.");
+                return;
+            }
 
-    var product = _productService.GetProduct(id);
+            var product = _productService.GetProduct(id);
 
-    if (product == null)
-    {
-        Console.WriteLine("Product not found.");
-        return;
-    }
+            if (product == null)
+            {
+                Console.WriteLine("Product not found.");
+                return;
+            }
 
-    Console.Write($"Enter New Name ({product.ProductName}): ");
-    string? name = Console.ReadLine();
-    if (!string.IsNullOrWhiteSpace(name))
-        product.ProductName = name;
+            Console.Write($"Enter New Name ({product.ProductName}): ");
+            string? name = Console.ReadLine();
+            if (!string.IsNullOrWhiteSpace(name))
+                product.ProductName = name;
 
-    Console.Write($"Enter New Description ({product.Description}): ");
-    string? description = Console.ReadLine();
-    if (!string.IsNullOrWhiteSpace(description))
-        product.Description = description;
+            Console.Write($"Enter New Description ({product.Description}): ");
+            string? description = Console.ReadLine();
+            if (!string.IsNullOrWhiteSpace(description))
+                product.Description = description;
 
-    Console.Write($"Enter New Cost ({product.Cost}): ");
-    if (decimal.TryParse(Console.ReadLine(), out decimal cost))
-        product.Cost = cost;
+            Console.Write($"Enter New Cost ({product.Cost}): ");
+            if (decimal.TryParse(Console.ReadLine(), out decimal cost))
+                product.Cost = cost;
 
-    Console.Write($"Enter New List Price ({product.ListPrice}): ");
-    if (decimal.TryParse(Console.ReadLine(), out decimal price))
-        product.ListPrice = price;
+            Console.Write($"Enter New List Price ({product.ListPrice}): ");
+            if (decimal.TryParse(Console.ReadLine(), out decimal price))
+                product.ListPrice = price;
 
-    Console.Write($"Enter New Category ID ({product.CategoryId}): ");
-    if (int.TryParse(Console.ReadLine(), out int category))
-        product.CategoryId = category;
+            Console.Write($"Enter New Category ID ({product.CategoryId}): ");
+            if (int.TryParse(Console.ReadLine(), out int category))
+                product.CategoryId = category;
 
-    Console.Write($"Enter New Unit Of Measure ({product.UnitOfMeasure}): ");
-    string? uom = Console.ReadLine();
-    if (!string.IsNullOrWhiteSpace(uom))
-        product.UnitOfMeasure = uom;
+            Console.Write($"Enter New Unit Of Measure ({product.UnitOfMeasure}): ");
+            string? uom = Console.ReadLine();
+            if (!string.IsNullOrWhiteSpace(uom))
+                product.UnitOfMeasure = uom;
 
-    Console.Write("Set Active? (Y/N): ");
-string? input = Console.ReadLine();
+            Console.Write("Set Active? (Y/N): ");
+            string? input = Console.ReadLine();
 
-if (!string.IsNullOrWhiteSpace(input))
-{
-    product.IsActive = input.ToUpper() == "Y";
-}
+            if (!string.IsNullOrWhiteSpace(input))
+            {
+                product.IsActive = input.ToUpper() == "Y";
+            }
 
-    bool updated = _productService.UpdateProduct(product);
+            bool updated = _productService.UpdateProduct(product);
 
-    Console.WriteLine(updated 
-        ? "Product updated successfully!" 
-        : "Update failed.");
-}
+            Console.WriteLine(updated
+                ? "Product updated successfully!"
+                : "Update failed.");
+        }
 
         private void Deactivate()
         {
@@ -199,7 +199,7 @@ if (!string.IsNullOrWhiteSpace(input))
             _productService.DeleteProduct(id);
         }
 
-         private void Pause()
+        private void Pause()
         {
             Console.WriteLine("\nPress any key to return to menu...");
             Console.ReadKey();

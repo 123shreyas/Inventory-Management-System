@@ -16,7 +16,7 @@ namespace InventoryManagementSystem.ConsoleUI
         {
             while (true)
             {
-                
+
                 Console.WriteLine("\n--- WAREHOUSES ---");
                 Console.WriteLine("1. Add Warehouse");
                 Console.WriteLine("2. View All Warehouses");

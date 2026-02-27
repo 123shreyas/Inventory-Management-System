@@ -1,13 +1,13 @@
 namespace InventoryManagementSystem.Models
 {
     public enum TransactionType
-{
-    IN,
-    OUT,
-    TRANSFER_IN,
-    TRANSFER_OUT,
-    ADJUST
-}
+    {
+        IN,
+        OUT,
+        TRANSFER_IN,
+        TRANSFER_OUT,
+        ADJUST
+    }
 
     public class StockTransaction
     {

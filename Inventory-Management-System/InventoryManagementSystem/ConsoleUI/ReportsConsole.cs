@@ -19,7 +19,7 @@ namespace InventoryManagementSystem.ConsoleUI
         {
             while (true)
             {
-                
+
                 Console.WriteLine("\n--- REPORTS & ANALYTICS ---");
                 Console.WriteLine("1. Total Inventory Value");
                 Console.WriteLine("2. Product-wise Stock Summary");

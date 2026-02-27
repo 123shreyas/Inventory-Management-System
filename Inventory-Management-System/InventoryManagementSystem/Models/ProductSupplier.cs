@@ -2,7 +2,7 @@ namespace InventoryManagementSystem.Models
 {
     public class ProductSupplier
     {
-       public int ProductSupplierId { get; set; }
+        public int ProductSupplierId { get; set; }
 
         public int ProductId { get; set; }
         public Product Product { get; set; } = null!;

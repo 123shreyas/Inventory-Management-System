@@ -17,7 +17,7 @@ namespace InventoryManagementSystem.ConsoleUI
         {
             while (true)
             {
-                
+
                 Console.WriteLine("\n--- STOCK TRANSACTIONS ---");
                 Console.WriteLine("1. View All Transactions");
                 Console.WriteLine("2. Add Transaction");
